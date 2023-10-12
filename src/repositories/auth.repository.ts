@@ -1,4 +1,4 @@
-import { Prisma, Session, User } from "@prisma/client";
+import { Session, User } from "@prisma/client";
 import prisma from "@/database/db.connection";
 
 async function createSession(data: SessionCreateInput) {
