@@ -1,5 +1,5 @@
-import { Prisma, Session, User } from "@prisma/client";
-import prisma from "@/database/db.connection";
+import { Session, User } from '@prisma/client';
+import prisma from '@/database/db.connection';
 
 async function createSession(data: SessionCreateInput) {
   return prisma.session.create({
@@ -15,15 +15,9 @@ async function findSession(token: string) {
   });
 }
 
-export type SessionCreateInput = Omit<
-  Session,
-  "id" | "createdAt" | "updatedAt"
->;
+export type SessionCreateInput = Omit<Session, 'id' | 'createdAt' | 'updatedAt'>;
 
-export type SignInSession = Omit<
-  User,
-  "id" | "name" | "nickName" | "createdAt" | "updatedAt"
->;
+export type SignInSession = Omit<User, 'id' | 'name' | 'nickName' | 'createdAt' | 'updatedAt'>;
 
 export const authRepository = {
   createSession,
