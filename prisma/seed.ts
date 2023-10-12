@@ -1,5 +1,5 @@
-import prisma from "../src/database/db.connection";
-import { products, practicesData } from "../src/utils/constants.utils";
+import prisma from '../src/database/db.connection';
+import { products, practicesData } from '../src/utils/constants.utils';
 
 async function seedProduct() {
   const { _count } = await prisma.product.aggregate({ _count: { _all: true } });
@@ -16,11 +16,9 @@ async function seedPractice() {
     _count: { _all: true },
   });
   const count = _count._all;
-  const data = Array.from({ length: practicesData.length - count }).map(
-    (_p, i) => ({
-      name: practicesData[count + i].name,
-    })
-  );
+  const data = Array.from({ length: practicesData.length - count }).map((_p, i) => ({
+    name: practicesData[count + i].name,
+  }));
   return await prisma.practice.createMany({ data });
 }
 
@@ -77,10 +75,7 @@ async function seedPracticeProduct() {
 }
 
 async function main() {
-  await seedProduct(),
-    await seedPractice(),
-    await seedPracticeAdvantage(),
-    await seedPracticeProduct();
+  await seedProduct(), await seedPractice(), await seedPracticeAdvantage(), await seedPracticeProduct();
 }
 
 main()
