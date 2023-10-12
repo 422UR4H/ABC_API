@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppErrors, CustomError } from "@/protocols/customError.protocols";
+import { AppErrors } from "@/protocols/customError.protocols";
 
 export default function errorHandler(
   error: AppErrors,
