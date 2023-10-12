@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import { practiceServices } from "@/services/practices.service";
 import {
     PracticeCreateInput,
-    PracticeUpsert,
+    PracticeAdvantageUpsert,
 } from "@/protocols/practices.protocols";
 import { PracticeParams } from "@/protocols/practices.protocols";
 
@@ -31,7 +31,7 @@ export async function updatePractice(req: Request, res: Response) {
 
 export async function upsertPracticeAdvantage(req: Request, res: Response) {
     const { practiceId } = req.params as PracticeParams;
-    const { advantage, description } = req.body as PracticeUpsert;
+    const { advantage, description } = req.body as PracticeAdvantageUpsert;
     const result = await practiceServices.upsertPracticeAdvantage(
         advantage,
         description,
