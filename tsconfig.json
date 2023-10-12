@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "baseUrl": "src",
+    "rootDirs": ["src"],
+    "paths": {
+      "@/*": ["*"]
+    }
+  },
+  "plugins": [
+    {
+      "transform": "typescript-transform-paths"
+    }
+  ],
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src", "tests"]
+}
