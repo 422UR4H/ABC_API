@@ -1,45 +1,25 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
-import customErrors from "@/errors/customErrors";
-import httpStatus from "http-status";
-import dotenv from "dotenv";
-import { UserProfile } from "@/protocols/user.protocols";
-import { userRepository } from "@/repositories/user.repository";
+import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
 
-dotenv.config();
-
-export default function validateAuth(
+export async function validateAuth(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+) {
   const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-  if (!token || token.includes(" "))
-    throw customErrors.unauthorized("Bearer token");
+  const authHeader = req.header("Authorization");
+  // if (!authHeader) throw unauthorizedError();
 
-  try {
-    const secret = process.env.JWT_SECRET || process.env.SECRET_KEY || "test";
-    jwt.verify(
-      token,
-      secret,
-      async (error: VerifyErrors, decoded: JwtPayload) => {
-        if (error)
-          return res.status(httpStatus.UNAUTHORIZED).send("token is not valid");
+  const token = authHeader.split(" ")[1];
+  // if (!token) throw unauthorizedError();
 
-        const user: User | null = await userRepository.readById(decoded.id);
-        if (user == null)
-          return res
-            .status(httpStatus.UNAUTHORIZED)
-            .send("user does not exist");
+  const { userId } = jwt.verify(token, process.env.JWT_SECRET);
 
-        const { password, ...userProfile } = user;
-        res.locals.user = userProfile as UserProfile;
-        return next();
-      }
-    );
-  } catch (err) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
-  }
+  res.locals.user = userId;
+  return next();
 }
+
+type JWTPayload = {
+  userId: number;
+};
