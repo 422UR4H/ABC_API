@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { notFound } from "@/errors/customErrors";
 import { User } from "@prisma/client";
 
 export async function validateAuth(
@@ -9,12 +10,15 @@ export async function validateAuth(
 ) {
   const { authorization } = req.headers;
   const authHeader = req.header("Authorization");
-  // if (!authHeader) throw unauthorizedError();
+  if (!authHeader) throw notFound();
 
   const token = authHeader.split(" ")[1];
-  // if (!token) throw unauthorizedError();
+  if (!token) throw notFound();
 
-  const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+  const { userId } = jwt.verify(
+    token,
+    process.env.JWT_SECRET || "development"
+  ) as JWTPayload;
 
   res.locals.user = userId;
   return next();
