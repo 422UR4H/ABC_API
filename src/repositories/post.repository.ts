@@ -41,16 +41,18 @@ async function findPostsById(id: number): Promise<Post | null> {
 }
 
 async function updatePost(post: PostUpdateBody, userId: number, forumCategory: ForumCategory) {
-  const { tags, ...inputData } = post;
+  const { tags, id, ...inputData } = post;
   const data = { forumCategory, author: userId, ...inputData };
   const result = await prisma.$transaction(async () => {
-    const post = await prisma.post.update({ data });
+    const post = await prisma.post.update({ where: { id }, data });
     if (post == null) throw notFound('post');
+
     const dataTag = Array.from({ length: tags.length }).map((_t, i) => ({
-      postId: post.id,
+      postId: id,
       productId: tags[i].productId,
     }));
-    prisma.tags.createMany({ data: dataTag });
+    await prisma.tags.deleteMany({ where: { postId: id } });
+    await prisma.tags.createMany({ data: dataTag });
   });
   return result;
 }

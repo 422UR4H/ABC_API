@@ -1,6 +1,6 @@
 import { ForumCategory } from '@prisma/client';
 import { postRepository } from '@/repositories/';
-import { PostCreateInput, PostUpdateInput, PostCreateBody, PostUpdateBody } from '@/protocols/';
+import { PostCreateBody, PostUpdateBody } from '@/protocols/';
 import { notFound, unauthorized } from '@/errors/customErrors';
 
 export async function createPost(post: PostCreateBody, userId: number, forumCategory: ForumCategory) {
