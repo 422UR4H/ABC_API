@@ -7,7 +7,7 @@ const practiceRouter = Router();
 
 practiceRouter
   .get('/', getPractices)
-  .all('/', validateAuth)
+  .all('/*', validateAuth)
   .post('/', validateBody(practiceBody), createPractices)
   .post(
     '/advantage/:practiceId',
@@ -19,4 +19,4 @@ practiceRouter
   .put('/:practiceId', validateBody(practiceBody), validateParams(practiceParams), updatePractice)
   .delete('/:practiceId', validateParams(practiceParams), deletePractice);
 
-export default practiceRouter;
+export { practiceRouter };

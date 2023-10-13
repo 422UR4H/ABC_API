@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import customErrors from '@/errors/customErrors';
 import { userRepository } from '@/repositories';
 import { UserCreateInput } from '@/protocols';
+import { conflict } from '@/errors/customErrors';
 
 async function searchUserByEmail(email: string) {
   const result = await userRepository.findUserByEmail(email);
-  if (result) throw customErrors.conflict('Email já cadastrado');
+  if (result) throw conflict('Email já cadastrado');
 }
 
 export async function createUser({ email, password, ...data }: UserCreateInput) {
