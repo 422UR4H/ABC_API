@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import { Request, Response } from 'express';
 import { postServices } from '@/services/post.service';
-import { PostCreateInput, PostUpdateInput, PostUpdateParams } from '@/protocols/post.protocols';
+import { PostCreateBody, PostUpdateBody } from '@/protocols/post.protocols';
 import { UserCredentials } from '@/protocols';
 import { ForumCategory } from '@prisma/client';
 import { badRequest } from '@/errors/customErrors';
@@ -9,9 +9,9 @@ import { badRequest } from '@/errors/customErrors';
 
 export async function createPost(req: Request, res: Response) {
   const user = res.locals.user as UserCredentials;
-  const forumCategory = req.params.forumCategory as ForumCategory;
-  const result = await postServices.createPost(req.body as PostCreateInput, user.userId, forumCategory);
-  
+  const forumCategory = req.params.forumCategory.toUpperCase() as ForumCategory;
+  const result = await postServices.createPost(req.body as PostCreateBody, user.userId, forumCategory);
+
   return res.status(httpStatus.CREATED).send(result);
 }
 
@@ -24,9 +24,9 @@ export async function getPostsByUserId(_req: Request, res: Response) {
 
 export async function updatePost(req: Request, res: Response) {
   const user = res.locals.user as UserCredentials;
-  const forumCategory = req.params.forumCategory as ForumCategory;
-  const result = await postServices.updatePost(req.body as PostUpdateInput, user.userId, forumCategory);
-  
+  const forumCategory = req.params.forumCategory.toUpperCase() as ForumCategory;
+  const result = await postServices.updatePost(req.body as PostUpdateBody, user.userId, forumCategory);
+
   return res.status(httpStatus.OK).send(result);
 }
 
