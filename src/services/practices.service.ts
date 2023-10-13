@@ -3,7 +3,7 @@ import { UserCredentials } from '@/protocols';
 import { practiceRepository } from '@/repositories';
 
 export async function createPractice(name: string, user: UserCredentials) {
-  if (user.role === 'GUEST') throw unauthorized('Usuario não tem permissão');
+  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await practiceRepository.createPractice({ name });
 }
@@ -13,7 +13,7 @@ export async function getPractice() {
 }
 
 export async function updatePractice(id: number, name: string, user: UserCredentials) {
-  if (user.role === 'GUEST') throw unauthorized('Usuario não tem permissão');
+  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await practiceRepository.updatePractice({ id, name });
 }
@@ -24,13 +24,13 @@ export async function upsertPracticeAdvantage(
   practiceId: number,
   user: UserCredentials,
 ) {
-  if (user.role === 'GUEST') throw unauthorized('Usuario não tem permissão');
+  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await practiceRepository.upsertPracticeAdvantage(advantage, description, practiceId);
 }
 
 export async function deletePractice(practiceId: number, user: UserCredentials) {
-  if (user.role === 'GUEST') throw unauthorized('Usuario não tem permissão');
+  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await practiceRepository.deletePractice(practiceId);
 }
