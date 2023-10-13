@@ -14,6 +14,8 @@ router
   .use('/products', productsRouter)
   .use('/practices', practiceRouter)
   .use('/forum', forumRouter)
+  .use('/posts', forumRouter)
+  .use('/comments', forumRouter)
   .use('/user-products', userProductsRouter);
 
 export default router;
