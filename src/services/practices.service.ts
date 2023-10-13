@@ -1,6 +1,6 @@
-import { unauthorized } from '@/errors/customErrors';
-import { UserCredentials } from '@/protocols';
 import { practiceRepository } from '@/repositories';
+import { UserCredentials } from '@/protocols';
+import { unauthorized } from '@/errors/customErrors';
 
 export async function createPractice(name: string, user: UserCredentials) {
   if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');

@@ -1,5 +1,5 @@
 import prisma from '@/database/db.connection';
-import { SessionCreateInput } from '@/protocols/auth.protocols';
+import { SessionCreateInput } from '@/protocols';
 
 async function createSession(data: SessionCreateInput) {
   return prisma.session.create({

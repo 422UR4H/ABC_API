@@ -1,6 +1,6 @@
 import { Practice } from '@prisma/client';
 import prisma from '@/database/db.connection';
-import { PracticeCreateInput, PracticeUpdateInput } from '@/protocols/';
+import { PracticeCreateInput, PracticeUpdateInput } from '@/protocols';
 
 async function createPractice(data: PracticeCreateInput): Promise<Practice> {
   return prisma.practice.create({
