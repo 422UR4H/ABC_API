@@ -7,7 +7,7 @@ export function errorHandler(error: AppErrors, _req: Request, res: Response, _ne
   if (error.code === 'P2002')
     return res.status(httpStatus.CONFLICT).send(`${error?.meta?.target} is already registered`);
 
-  if (error.code === 'P2003') return res.status(httpStatus.NOT_FOUND).send(``);
+  if (error.code === 'P2003') return res.status(httpStatus.NOT_FOUND).send(`Alvo não existe`);
 
   if (error.code === 'P2025') return res.status(httpStatus.NOT_FOUND).send(`${error?.meta?.cause} `);
 
