@@ -6,8 +6,21 @@ async function createPost(post: PostCreateInput, author: number, forumCategory: 
     return prisma.post.create({ data: { ...post, author, forumCategory } });
 }
 
-async function findPostsByUserId(author: number): Promise<Post[]> {
-    return prisma.post.findMany({ where: { author } });
+async function findPostsWithCommentsByUserId(author: number) {
+    return prisma.post.findMany({
+        where: { author },
+        include: {
+            comment: {
+                select: {
+                    id: true,
+                    userId: true,
+                    text: true,
+                    createdAt: true,
+                    updatedAt: true,
+                }
+            }
+        }
+    });
 }
 
 async function findPostsById(id: number): Promise<Post | null> {
@@ -28,7 +41,7 @@ async function deletePost(id: number) {
 
 export const postRepository = {
     createPost,
-    findPostsByUserId,
+    findPostsWithCommentsByUserId,
     findPostsById,
     updatePost,
     deletePost,
