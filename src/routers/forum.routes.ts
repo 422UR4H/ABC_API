@@ -5,6 +5,6 @@ import { getForum } from '@/controllers';
 
 const forumRouter = Router();
 
-forumRouter.get('/', validateParams(forumParams), getForum);
+forumRouter.get('/:category', validateParams(forumParams), getForum);
 
 export { forumRouter };

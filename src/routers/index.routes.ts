@@ -20,6 +20,6 @@ router
   .use('/posts', postRouter)
   .use('/comments', commentRouter)
   .use('/user-products', userProductsRouter)
-  .use('news', newsRouter);
+  .use('/news', newsRouter);
 
 export default router;

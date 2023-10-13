@@ -8,7 +8,7 @@ const commentRouter = Router();
 commentRouter
   .all('/*', validateAuth)
   .get('/', getCommentByUserId)
-  .post('/:postId', validateBody(commentBody), validateParams(commentIdParam), createComment)
+  .post('/', validateBody(commentBody), createComment)
   .put('/:commentId', validateBody(commentBody), validateParams(commentIdParam), updateComment)
   .delete('/:commentId', validateParams(commentIdParam), deleteComment);
 

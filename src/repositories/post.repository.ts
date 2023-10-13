@@ -14,7 +14,7 @@ async function createPost(post: PostCreateBody, author: number, forumCategory: F
       postId: post.id,
       productId: tags[i].productId,
     }));
-    prisma.tags.createMany({ data: dataTag });
+    await prisma.tags.createMany({ data: dataTag });
   });
   return result;
 }
