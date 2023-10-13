@@ -3,11 +3,11 @@ import { createPractices, getPractices, updatePractice, deletePractice, upsertPr
 import { validateAuth, validateBody, validateParams } from '@/middlewares';
 import { practiceAdvantageBody, practiceBody, practiceParams } from '@/schemas';
 
-export const practiceRouter = Router();
+const practiceRouter = Router();
 
 practiceRouter
   .get('/', getPractices)
-  .all('/', validateAuth)
+  .all('/*', validateAuth)
   .post('/', validateBody(practiceBody), createPractices)
   .post(
     '/advantage/:practiceId',
@@ -18,3 +18,7 @@ practiceRouter
 
   .put('/:practiceId', validateBody(practiceBody), validateParams(practiceParams), updatePractice)
   .delete('/:practiceId', validateParams(practiceParams), deletePractice);
+
+
+export { practiceRouter };
+

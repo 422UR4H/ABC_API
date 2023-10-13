@@ -4,3 +4,4 @@ export * from './products.protocols';
 export * from './practices.protocols';
 export * from './forum.protocols';
 export * from './customError.protocols';
+export * from './userProduct.protocols';

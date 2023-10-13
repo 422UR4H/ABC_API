@@ -1,24 +1,17 @@
-import { Router } from "express";
-import {
-  createProduct,
-  getProduct,
-  getProductByIdAndPractice,
-  updateProduct,
-  deleteProduct,
-} from "@/controllers/products.controller";
-import { validateBody, validateParams } from "@/middlewares/schema.middleware";
-import { productBody, productParams } from "@/schemas/products.schemas";
+import { Router } from 'express';
+import { createProduct, getProduct, getProductByIdAndPractice, updateProduct, deleteProduct } from '@/controllers';
+import { validateAuth, validateBody, validateParams } from '@/middlewares';
+import { productBody, productParams } from '@/schemas';
 
-export const productsRouter = Router();
+const productsRouter = Router();
 
 productsRouter
-  .post("/", validateBody(productBody), createProduct)
-  .get("/", getProduct)
-  .get("/:productId", validateParams(productParams), getProductByIdAndPractice)
-  .put(
-    "/:productId",
-    validateBody(productBody),
-    validateParams(productParams),
-    updateProduct
-  )
-  .delete("/:productId", validateParams(productParams), deleteProduct);
+  .get('/', getProduct)
+  .get('/:productId', validateParams(productParams), getProductByIdAndPractice)
+  .all('/*', validateAuth)
+  .post('/', validateBody(productBody), createProduct)
+  .put('/:productId', validateBody(productBody), validateParams(productParams), updateProduct)
+  .delete('/:productId', validateParams(productParams), deleteProduct);
+
+export { productsRouter };
+

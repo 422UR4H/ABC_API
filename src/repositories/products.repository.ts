@@ -1,6 +1,6 @@
-import prisma from "@/database/db.connection";
-import { ProductCreateInput, ProductUpdateInput } from "@/protocols/products.protocols";
-import { Product } from "@prisma/client";
+import prisma from '@/database/db.connection';
+import { ProductCreateInput, ProductUpdateInput } from '@/protocols/products.protocols';
+import { Product } from '@prisma/client';
 
 async function createProduct(data: ProductCreateInput): Promise<Product> {
   return prisma.product.create({
@@ -22,9 +22,10 @@ async function getProductByIdAndPractice(productId: number) {
         select: {
           practice: {
             select: {
+              id: true,
               name: true,
               practiceAdvantage: {
-                select: { advantage: true, description: true },
+                select: { id: true, advantage: true, description: true },
               },
             },
           },
@@ -47,7 +48,7 @@ async function deleteProduct(productId: number) {
   return prisma.product.delete({ where: { id: productId } });
 }
 
-export const productRepository = {
+export const productsRepository = {
   createProduct,
   getProduct,
   getProductByIdAndPractice,
