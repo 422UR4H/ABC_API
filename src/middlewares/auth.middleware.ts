@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { authRepository } from '@/repositories';
-import { unauthorized } from '@/errors/customErrors';
 import { UserCredentials } from '@/protocols';
+import { unauthorized } from '@/errors/customErrors';
 
 export async function validateAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');

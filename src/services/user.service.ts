@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import customErrors from '@/errors/customErrors';
-import { userRepository } from '@/repositories/user.repository';
-import { UserCreateInput } from '@/protocols/user.protocols';
-
+import { userRepository } from '@/repositories';
+import { UserCreateInput } from '@/protocols';
 
 async function searchUserByEmail(email: string) {
   const result = await userRepository.findUserByEmail(email);
