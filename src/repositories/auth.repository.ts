@@ -7,10 +7,10 @@ async function createSession(data: SessionCreateInput) {
   });
 }
 
-async function findSession(token: string) {
+async function findSession(userId: number) {
   return prisma.session.findFirst({
     where: {
-      token,
+      userId,
     },
     include: { user: { select: { role: true } } },
   });

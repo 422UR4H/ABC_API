@@ -13,7 +13,7 @@ export async function validateAuth(req: Request, res: Response, next: NextFuncti
 
   const { userId } = jwt.verify(token, process.env.JWT_SECRET || 'development') as JWTPayload;
 
-  const session = await authRepository.findSession(token);
+  const session = await authRepository.findSession(userId);
   if (!session) throw unauthorized('Usuario não está logado');
 
   const user: UserCredentials = { userId, role: session.user.role };

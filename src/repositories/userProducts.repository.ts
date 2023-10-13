@@ -4,7 +4,7 @@ import { UserProductCreateInput } from '@/protocols';
 async function addProduct(data: UserProductCreateInput) {
   return await prisma.userProduct.create({
     data,
-    include: {
+    select: {
       product: {
         select: {
           id: true,
@@ -29,7 +29,7 @@ async function addProduct(data: UserProductCreateInput) {
 async function getUserProducts(userId: number) {
   return prisma.userProduct.findMany({
     where: { userId },
-    include: {
+    select: {
       product: {
         select: {
           id: true,
@@ -59,7 +59,7 @@ async function getUserProductsById(userId: number, productId: number) {
         userId,
       },
     },
-    include: {
+    select: {
       product: {
         select: {
           id: true,

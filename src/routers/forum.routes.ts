@@ -1,9 +1,10 @@
-import { Router } from "express";
-import { validateParams } from "@/middlewares/schema.middleware";
-import { forumParams } from "@/schemas/forum.schemas";
-import { getForum } from "@/controllers/forum.controller";
+import { Router } from 'express';
+import { validateParams } from '@/middlewares/schema.middleware';
+import { forumParams } from '@/schemas/forum.schemas';
+import { getForum } from '@/controllers/forum.controller';
 
-export const forumRouter = Router();
+const forumRouter = Router();
 
-forumRouter
-  .get("/", validateParams(forumParams), getForum)
+forumRouter.get('/', validateParams(forumParams), getForum);
+
+export { forumRouter };
