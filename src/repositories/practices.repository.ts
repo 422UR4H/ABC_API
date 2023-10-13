@@ -8,8 +8,10 @@ async function createPractice(data: PracticeCreateInput): Promise<Practice> {
   });
 }
 
-async function getPractice(): Promise<Practice[]> {
-  return prisma.practice.findMany();
+async function getPractice() {
+  return prisma.practice.findMany({
+    select: { id: true, name: true, practiceAdvantage: { select: { id: true, advantage: true, description: true } } },
+  });
 }
 
 async function updatePractice(data: PracticeUpdateInput): Promise<Practice> {

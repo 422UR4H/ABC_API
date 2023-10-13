@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import { Request, Response } from 'express';
-import { practiceServices } from '@/services/practices.service';
+import { practiceServices } from '@/services';
 import { PracticeCreateInput, PracticeParams, PracticeAdvantageUpsert, UserCredentials } from '@/protocols';
 
 export async function createPractices(req: Request, res: Response) {
