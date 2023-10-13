@@ -1,5 +1,5 @@
-import { Session, User } from '@prisma/client';
 import prisma from '@/database/db.connection';
+import { SessionCreateInput } from '@/protocols/auth.protocols';
 
 async function createSession(data: SessionCreateInput) {
   return prisma.session.create({
@@ -15,10 +15,6 @@ async function findSession(token: string) {
     include: { User: { select: { role: true } } },
   });
 }
-
-export type SessionCreateInput = Omit<Session, 'id' | 'createdAt' | 'updatedAt'>;
-
-export type SignInSession = Omit<User, 'id' | 'name' | 'nickName' | 'createdAt' | 'updatedAt'>;
 
 export const authRepository = {
   createSession,
