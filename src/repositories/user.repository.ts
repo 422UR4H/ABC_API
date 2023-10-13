@@ -1,5 +1,5 @@
-import prisma from '@/database/db.connection';
 import { User } from '@prisma/client';
+import prisma from '@/database/db.connection';
 
 async function createUser(data: UserCreateInput): Promise<User> {
   return prisma.user.create({ data });

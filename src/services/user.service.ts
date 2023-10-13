@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { UserCreateInput, userRepository } from '@/repositories/user.repository';
+import { UserCreateInput, userRepository } from '@/repositories';
 import customErrors from '@/errors/customErrors';
 
 async function searchUserByEmail(email: string) {

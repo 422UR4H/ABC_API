@@ -14,12 +14,18 @@ model User {
     nickName    String        @db.VarChar()
     email       String        @unique @db.VarChar(32)
     password    String        @db.VarChar(255)
+    role        UserCategory  @default(GUEST)
     createdAt   DateTime      @default(now())
     updatedAt   DateTime      @updatedAt
     userProduct UserProduct[]
     Session     Session[]
 
     @@map("users")
+}
+
+enum UserCategory {
+    ADMIN
+    GUEST
 }
 
 model Session {

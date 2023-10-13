@@ -1,47 +1,42 @@
-import prisma from "@/database/db.connection";
-import { Practice } from "@prisma/client";
-import { PracticeCreateInput, PracticeUpdateInput } from "@/protocols/practices.protocols";
-
+import { Practice } from '@prisma/client';
+import prisma from '@/database/db.connection';
+import { PracticeCreateInput, PracticeUpdateInput } from '@/protocols/';
 
 async function createPractice(data: PracticeCreateInput): Promise<Practice> {
-    return prisma.practice.create({
-        data,
-    });
+  return prisma.practice.create({
+    data,
+  });
 }
 
 async function getPractice(): Promise<Practice[]> {
-    return prisma.practice.findMany();
+  return prisma.practice.findMany();
 }
 
 async function updatePractice(data: PracticeUpdateInput): Promise<Practice> {
-    return prisma.practice.update({
-        where: { id: data.id },
-        data: {
-            name: data.name,
-        },
-    });
+  return prisma.practice.update({
+    where: { id: data.id },
+    data: {
+      name: data.name,
+    },
+  });
 }
 
-async function upsertPracticeAdvantage(
-    advantage: string,
-    description: string,
-    practiceId: number
-) {
-    return await prisma.practiceAdvantage.upsert({
-        where: { practiceId },
-        create: { advantage, description, practiceId },
-        update: { advantage, description },
-    });
+async function upsertPracticeAdvantage(advantage: string, description: string, practiceId: number) {
+  return await prisma.practiceAdvantage.upsert({
+    where: { practiceId },
+    create: { advantage, description, practiceId },
+    update: { advantage, description },
+  });
 }
 
 async function deletePractice(practiceId: number) {
-    return prisma.practice.delete({ where: { id: practiceId } });
+  return prisma.practice.delete({ where: { id: practiceId } });
 }
 
 export const practiceRepository = {
-    createPractice,
-    getPractice,
-    updatePractice,
-    upsertPracticeAdvantage,
-    deletePractice,
+  createPractice,
+  getPractice,
+  updatePractice,
+  upsertPracticeAdvantage,
+  deletePractice,
 };

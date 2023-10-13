@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '@prisma/client';
-import { authRepository, SignInSession } from '@/repositories/auth.repository';
+import { authRepository, SignInSession, userRepository } from '@/repositories';
 import { unauthorized, notFound } from '@/errors/customErrors';
-import { userRepository } from '@/repositories/user.repository';
 
 export async function createSession({ email, password }: SignInSession) {
   const user = await getUser(email);
