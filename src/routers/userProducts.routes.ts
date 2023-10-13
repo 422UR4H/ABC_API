@@ -6,7 +6,7 @@ import { addUserProduct, deleteUserProduct, getUserProduct, getUserProductById }
 const userProductsRouter = Router();
 
 userProductsRouter
-  .all('/', validateAuth)
+  .all('/*', validateAuth)
   .post('/:productId', validateParams(productParams), addUserProduct)
   .get('/', getUserProduct)
   .get('/:productId', getUserProductById)

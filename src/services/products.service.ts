@@ -3,7 +3,7 @@ import { UserCredentials } from '@/protocols';
 import { unauthorized } from '@/errors/customErrors';
 
 export async function createProduct(name: string, user: UserCredentials) {
-  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
+  if (user.role !== 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await productsRepository.createProduct({ name });
 }
@@ -17,12 +17,12 @@ export async function getProductByIdAndPractice(productId: number) {
 }
 
 export async function updateProduct(id: number, name: string, user: UserCredentials) {
-  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
+  if (user.role !== 'ADMIN') throw unauthorized('Usuario não tem permissão');
   return await productsRepository.updateProduct({ id, name });
 }
 
 export async function deleteProduct(productId: number, user: UserCredentials) {
-  if (user.role === 'ADMIN') throw unauthorized('Usuario não tem permissão');
+  if (user.role !== 'ADMIN') throw unauthorized('Usuario não tem permissão');
 
   return await productsRepository.deleteProduct(productId);
 }

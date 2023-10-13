@@ -14,7 +14,9 @@ async function getUserProducts(userId: number) {
 }
 
 async function getUserProductsById(userId: number, productId: number) {
-  return await userProductsRepository.getUserProductsById(userId, productId);
+  const product = await userProductsRepository.getUserProductsById(userId, productId);
+  if (!product) throw notFound('Produto ainda não foi adicionado');
+  return product;
 }
 
 async function deleteUserProducts(userId: number, productId: number) {
