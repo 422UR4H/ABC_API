@@ -19,4 +19,6 @@ practiceRouter
   .put('/:practiceId', validateBody(practiceBody), validateParams(practiceParams), updatePractice)
   .delete('/:practiceId', validateParams(practiceParams), deletePractice);
 
+
 export { practiceRouter };
+
