@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { validateBody } from '@/middlewares/schema.middleware';
-import { createUserSchema } from '@/schemas/user.schemas';
-import { createUser } from '@/controllers/user.controller';
+import { validateBody } from '@/middlewares';
+import { createUserSchema } from '@/schemas';
+import { createUser } from '@/controllers';
 
 const userRouter = Router();
 

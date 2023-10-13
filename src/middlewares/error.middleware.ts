@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { AppErrors } from '@/protocols/customError.protocols';
+import { AppErrors } from '@/protocols';
 
-export default function errorHandler(error: AppErrors, _req: Request, res: Response, _next: NextFunction) {
+export function errorHandler(error: AppErrors, _req: Request, res: Response, _next: NextFunction) {
   console.log(error);
   if (error.code === 'P2002')
     return res.status(httpStatus.CONFLICT).send(`${error?.meta?.target} is already registered`);

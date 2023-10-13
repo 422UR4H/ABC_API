@@ -12,6 +12,7 @@ async function findSession(token: string) {
     where: {
       token,
     },
+    include: { User: { select: { role: true } } },
   });
 }
 

@@ -1,17 +1,24 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { notFound } from '@/errors/customErrors';
+import { authRepository } from '@/repositories';
+import { unauthorized } from '@/errors/customErrors';
+import { UserCredentials } from '@/protocols';
 
 export async function validateAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');
-  if (!authHeader) throw notFound();
+  if (!authHeader) throw unauthorized('Usuario não está logado');
 
   const token = authHeader.split(' ')[1];
-  if (!token) throw notFound();
+  if (!token) throw unauthorized('Usuario não está logado');
 
   const { userId } = jwt.verify(token, process.env.JWT_SECRET || 'development') as JWTPayload;
 
-  res.locals.user = userId;
+  const session = await authRepository.findSession(token);
+  if (!session) throw unauthorized('Usuario não está logado');
+
+  const user: UserCredentials = { userId, role: session.User.role };
+
+  res.locals.user = user;
   return next();
 }
 
