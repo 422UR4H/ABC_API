@@ -16,7 +16,7 @@ export async function validateAuth(req: Request, res: Response, next: NextFuncti
   const session = await authRepository.findSession(token);
   if (!session) throw unauthorized('Usuario não está logado');
 
-  const user: UserCredentials = { userId, role: session.User.role };
+  const user: UserCredentials = { userId, role: session.user.role };
 
   res.locals.user = user;
   return next();

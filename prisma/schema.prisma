@@ -31,7 +31,7 @@ enum UserCategory {
 model Session {
     id        Int      @id @default(autoincrement())
     userId    Int
-    User      User     @relation(fields: [userId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
     token     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
