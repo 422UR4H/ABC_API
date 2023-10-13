@@ -3,7 +3,7 @@ import { createPractices, getPractices, updatePractice, deletePractice, upsertPr
 import { validateAuth, validateBody, validateParams } from '@/middlewares';
 import { practiceAdvantageBody, practiceBody, practiceParams } from '@/schemas';
 
-const practiceRouter = Router();
+export const practiceRouter = Router();
 
 practiceRouter
   .get('/', getPractices)
@@ -18,5 +18,3 @@ practiceRouter
 
   .put('/:practiceId', validateBody(practiceBody), validateParams(practiceParams), updatePractice)
   .delete('/:practiceId', validateParams(practiceParams), deletePractice);
-
-export default practiceRouter;

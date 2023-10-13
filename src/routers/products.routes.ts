@@ -9,9 +9,9 @@ import {
 import { validateBody, validateParams } from "@/middlewares/schema.middleware";
 import { productBody, productParams } from "@/schemas/products.schemas";
 
-const productRouter = Router();
+export const productsRouter = Router();
 
-productRouter
+productsRouter
   .post("/", validateBody(productBody), createProduct)
   .get("/", getProduct)
   .get("/:productId", validateParams(productParams), getProductByIdAndPractice)
@@ -22,5 +22,3 @@ productRouter
     updateProduct
   )
   .delete("/:productId", validateParams(productParams), deleteProduct);
-
-export default productRouter;
