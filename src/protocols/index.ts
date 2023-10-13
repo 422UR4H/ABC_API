@@ -3,5 +3,8 @@ export * from './user.protocols';
 export * from './products.protocols';
 export * from './practices.protocols';
 export * from './forum.protocols';
+export * from './post.protocols';
+export * from './comments.protocols';
 export * from './customError.protocols';
 export * from './userProduct.protocols';
+export * from './news.protocols';
