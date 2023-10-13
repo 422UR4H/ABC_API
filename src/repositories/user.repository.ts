@@ -1,4 +1,5 @@
 import prisma from '@/database/db.connection';
+import { UserCreateInput } from '@/protocols/user.protocols';
 import { User } from '@prisma/client';
 
 async function createUser(data: UserCreateInput): Promise<User> {
@@ -8,7 +9,5 @@ async function createUser(data: UserCreateInput): Promise<User> {
 async function findUserByEmail(email: string) {
   return prisma.user.findUnique({ where: { email } });
 }
-
-export type UserCreateInput = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const userRepository = { createUser, findUserByEmail };

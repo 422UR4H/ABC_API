@@ -1,5 +1,5 @@
+import { UserCreateInput } from '@/protocols/user.protocols';
 import Joi from 'joi';
-import { UserCreateInput } from '@/repositories/user.repository';
 
 export const createUserSchema = Joi.object<UserCreateInput>({
   name: Joi.string().required(),
