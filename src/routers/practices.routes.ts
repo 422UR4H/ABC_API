@@ -7,7 +7,7 @@ const practiceRouter = Router();
 
 practiceRouter
   .get('/', getPractices)
-  .all('/', validateAuth)
+  .all('/*', validateAuth)
   .post('/', validateBody(practiceBody), createPractices)
   .post(
     '/advantage/:practiceId',

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { userRouter } from './user.routes';
 import { authRouter } from './auth.routes';
+import { productsRouter } from './products.routes';
 import { practiceRouter } from './practices.routes';
 import { userProductsRouter } from './userProducts.routes';
 
