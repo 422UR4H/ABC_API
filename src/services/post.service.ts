@@ -8,7 +8,7 @@ export async function createPost(post: PostCreateInput, userId: number, forumCat
 }
 
 export async function findPostsByUserId(userId: number) {
-    return await postRepository.findPostsByUserId(userId);
+    return await postRepository.findPostsWithCommentsByUserId(userId);
 }
 
 export async function updatePost(post: PostUpdateInput, userId: number, forumCategory: ForumCategory) {
