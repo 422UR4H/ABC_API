@@ -3,6 +3,7 @@ import customErrors from '@/errors/customErrors';
 import { userRepository } from '@/repositories/user.repository';
 import { UserCreateInput } from '@/protocols/user.protocols';
 
+
 async function searchUserByEmail(email: string) {
   const result = await userRepository.findUserByEmail(email);
   if (result) throw customErrors.conflict('Email já cadastrado');
