@@ -1,3 +1,4 @@
+import { ForumCategory } from '@prisma/client';
 import prisma from '../src/database/db.connection';
 import { products, practicesData } from '../src/utils/constants.utils';
 
@@ -74,8 +75,24 @@ async function seedPracticeProduct() {
   return await prisma.practiceProduct.createMany({ data });
 }
 
+async function seedForum() {
+  const { _count } = await prisma.forum.aggregate({
+    _count: { _all: true },
+  });
+  const count = _count._all;
+
+  const data = Array.from({ length: Object.keys(ForumCategory).length - count }).map((_p, i) => ({
+    category: Object.entries(ForumCategory)[i][1],
+  }));
+  return prisma.forum.createMany({ data });
+}
+
 async function main() {
-  await seedProduct(), await seedPractice(), await seedPracticeAdvantage(), await seedPracticeProduct();
+  await seedProduct();
+  await seedPractice();
+  await seedPracticeAdvantage();
+  await seedPracticeProduct();
+  await seedForum();
 }
 
 main()

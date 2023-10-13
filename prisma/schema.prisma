@@ -19,6 +19,8 @@ model User {
     updatedAt   DateTime      @updatedAt
     userProduct UserProduct[]
     session     Session[]
+    post        Post[]
+    comment     Comment[]
 
     @@map("users")
 }
@@ -47,6 +49,7 @@ model Product {
 
     userProduct     UserProduct[]
     practiceProduct PracticeProduct[]
+    tags            Tags[]
 
     @@map("products")
 }
@@ -101,4 +104,61 @@ model PracticeProduct {
     practice Practice @relation(fields: [practiceId], references: [id])
 
     @@map("practiceProducts")
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    title     String   @db.VarChar(64)
+    text      String   @db.VarChar(255)
+    author    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user    User      @relation(fields: [author], references: [id])
+    forum   Forum[]
+    comment Comment[]
+    tags    Tags[]
+
+    @@map("posts")
+}
+
+enum ForumCategory {
+    HELP
+    NEWS
+    DISCUTIONS
+}
+
+model Forum {
+    category  ForumCategory @id
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt
+
+    post Post[]
+
+    @@map("forum")
+}
+
+model Comment {
+    id        Int      @id @default(autoincrement())
+    text      String   @db.VarChar(128)
+    userId    Int
+    postId    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+    post Post @relation(fields: [postId], references: [id])
+
+    @@map("comments")
+}
+
+model Tags {
+    id        Int @id @default(autoincrement())
+    postId    Int
+    productId Int
+
+    post    Post    @relation(fields: [postId], references: [id])
+    product Product @relation(fields: [productId], references: [id])
+
+    @@map("tags")
 }

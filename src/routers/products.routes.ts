@@ -14,3 +14,4 @@ productsRouter
   .delete('/:productId', validateParams(productParams), deleteProduct);
 
 export { productsRouter };
+
