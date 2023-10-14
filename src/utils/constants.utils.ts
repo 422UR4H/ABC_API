@@ -1,4 +1,4 @@
-export const LIMIT = 10;
+export const LIMIT_NEWS = 20;
 
 export const products = [
   'Soja',

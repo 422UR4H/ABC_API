@@ -1,9 +1,13 @@
 import { News } from '@prisma/client';
 import prisma from '@/database/db.connection';
 import { NewsCreateInput, NewsUpdateInput } from '@/protocols/';
+import { LIMIT_NEWS } from '@/utils/constants.utils';
 
 async function getNews(): Promise<News[]> {
-  return prisma.news.findMany({});
+  return prisma.news.findMany({
+    take: LIMIT_NEWS,
+    orderBy: { createdAt: 'desc' }
+  });
 }
 
 async function getNewsById(newsId: number): Promise<News | null> {
