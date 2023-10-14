@@ -7,3 +7,4 @@ export * from './forum.schemas';
 export * from './post.schemas';
 export * from './comments.schemas';
 export * from './news.schemas';
+export * from './savedItens.schemas';

@@ -9,3 +9,4 @@ export * from './comments.protocols';
 export * from './customError.protocols';
 export * from './userProduct.protocols';
 export * from './news.protocols';
+export * from './savedItems.protocols';

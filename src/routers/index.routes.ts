@@ -8,6 +8,7 @@ import { forumRouter } from './forum.routes';
 import { postRouter } from './post.routes';
 import { commentRouter } from './comment.routes';
 import { newsRouter } from './news.routes';
+import { savedItensRouter } from './savedItens.routes';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router
   .use('/posts', postRouter)
   .use('/comments', commentRouter)
   .use('/user-products', userProductsRouter)
-  .use('/news', newsRouter);
+  .use('/news', newsRouter)
+  .use('/save', savedItensRouter);
 
 export default router;

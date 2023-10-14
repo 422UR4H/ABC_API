@@ -23,6 +23,8 @@ model User {
     comment     Comment[]
     news        News[]
     profile     Profile?
+    savedPost   SavedPost[]
+    savedNews   SavedNews[]
 
     @@map("users")
 }
@@ -161,10 +163,11 @@ model Post {
     createdAt     DateTime      @default(now())
     updatedAt     DateTime      @updatedAt
 
-    user    User      @relation(fields: [author], references: [id], onDelete: Cascade)
-    forum   Forum     @relation(fields: [forumCategory], references: [category], onDelete: Cascade)
-    comment Comment[]
-    tags    Tags[]
+    user      User        @relation(fields: [author], references: [id], onDelete: Cascade)
+    forum     Forum       @relation(fields: [forumCategory], references: [category], onDelete: Cascade)
+    comment   Comment[]
+    tags      Tags[]
+    savedPost SavedPost[]
 
     @@map("posts")
 }
@@ -203,7 +206,32 @@ model News {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user User @relation(fields: [author], references: [id], onDelete: Cascade)
+    user      User        @relation(fields: [author], references: [id], onDelete: Cascade)
+    savedNews SavedNews[]
 
     @@map("news")
+}
+
+model SavedPost {
+    id     Int @id @default(autoincrement())
+    userId Int
+    postId Int
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, postId], name: "saved_post_user_id_post_id")
+    @@map("savedPosts")
+}
+
+model SavedNews {
+    id     Int @id @default(autoincrement())
+    userId Int
+    newsId Int
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, newsId], name: "saved_news_user_id_newsId")
+    @@map("savedNews")
 }
