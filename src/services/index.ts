@@ -9,3 +9,4 @@ export * from './comment.service';
 export * from './userProducts.service';
 export * from './news.service';
 export * from './savedItens.service';
+export * from './validationPractices.service';
