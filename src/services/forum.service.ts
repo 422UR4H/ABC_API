@@ -2,7 +2,11 @@ import { ForumRepository } from '@/repositories';
 import { ForumCategory } from '@prisma/client';
 
 async function findForum(category: string) {
-    return await ForumRepository.getForum(category.toUpperCase() as ForumCategory);
+    return await ForumRepository.findForum(category.toUpperCase() as ForumCategory);
 }
 
-export const forumService = { findForum };
+async function findAllForums() {
+    return await ForumRepository.findAllForums();
+}
+
+export const forumService = { findForum, findAllForums };
