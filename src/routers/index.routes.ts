@@ -9,13 +9,16 @@ import { postRouter } from './post.routes';
 import { commentRouter } from './comment.routes';
 import { newsRouter } from './news.routes';
 import { savedItensRouter } from './savedItens.routes';
+import { profileRouter } from './profile.routes';
 import { validatedPracticeRouter } from './validationPractices.routes';
+
 
 const router = Router();
 
 router
   .use('/sign-up', userRouter)
   .use('/sign-in', authRouter)
+  .use('/profile', profileRouter)
   .use('/products', productsRouter)
   .use('/practices', practiceRouter)
   .use('/forum', forumRouter)
