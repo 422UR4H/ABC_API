@@ -15,10 +15,16 @@ async function addValidatedPractices(userId: number, practiceId: number) {
   return prisma.userValidatedPractice.create({ data: { userId, practiceId } });
 }
 
-async function getValidatedPractices(userId: number, practiceId: number) {
+async function getValidatedPracticesByID(userId: number, practiceId: number) {
   return prisma.userValidatedPractice.findUnique({ where: { validated_userId_practiceId: { userId, practiceId } } });
 }
 
+async function getValidatedPracticesByUser(userId: number) {
+  return prisma.userValidatedPractice.findMany({
+    where: { userId },
+    select: { practice: { select: { id: true, name: true } } },
+  });
+}
 async function totalUserValidatedPractices(userId: number) {
   return prisma.userValidatedPractice.aggregate({ where: { userId }, _count: { _all: true } });
 }
@@ -28,6 +34,7 @@ export const validationPracticesRepository = {
   getToValidationPractices,
   removeToValidatePractices,
   addValidatedPractices,
-  getValidatedPractices,
+  getValidatedPracticesByID,
+  getValidatedPracticesByUser,
   totalUserValidatedPractices,
 };

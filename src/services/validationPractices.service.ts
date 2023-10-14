@@ -4,7 +4,7 @@ import { conflict, badRequest } from '@/errors/customErrors';
 import { UserValidationStatus } from '@prisma/client';
 
 async function addToValidatePractices(user: UserCredentials, practiceId: number) {
-  const validated = await validationPracticesRepository.getValidatedPractices(user.userId, practiceId);
+  const validated = await validationPracticesRepository.getValidatedPracticesByID(user.userId, practiceId);
   if (validated) throw conflict('Usuario já validou essa pratica');
 
   return await validationPracticesRepository.addToValidatePractices(user.userId, practiceId);
@@ -22,6 +22,10 @@ async function addValidatedPractices(user: UserCredentials, practiceId: number) 
 
   const userStatus = await updateUserStatus(user.userId, total._count._all);
   return { validated, userStatus };
+}
+
+async function getValidatedPracticesByUser(userId: number) {
+  return await validationPracticesRepository.getValidatedPracticesByUser(userId);
 }
 
 async function updateUserStatus(userId: number, total: number) {
@@ -42,4 +46,8 @@ async function updateUserStatus(userId: number, total: number) {
   }
 }
 
-export const validationPracticesService = { addToValidatePractices, addValidatedPractices };
+export const validationPracticesService = {
+  addToValidatePractices,
+  addValidatedPractices,
+  getValidatedPracticesByUser,
+};
