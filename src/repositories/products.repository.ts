@@ -1,6 +1,6 @@
-import prisma from '@/database/db.connection';
-import { ProductCreateInput, ProductUpdateInput } from '@/protocols/products.protocols';
 import { Product } from '@prisma/client';
+import prisma from '@/database/db.connection';
+import { ProductCreateInput, ProductUpdateInput } from '@/protocols';
 
 async function createProduct(data: ProductCreateInput): Promise<Product> {
   return prisma.product.create({

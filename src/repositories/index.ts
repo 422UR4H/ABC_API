@@ -6,3 +6,4 @@ export * from './forum.repository';
 export * from './post.repository';
 export * from './userProducts.repository';
 export * from './news.repository';
+export * from './savedItems.repository';
