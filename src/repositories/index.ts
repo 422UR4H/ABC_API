@@ -8,3 +8,4 @@ export * from './post.repository';
 export * from './userProducts.repository';
 export * from './news.repository';
 export * from './savedItens.repository';
+export * from './validationPractices.repository';

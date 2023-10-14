@@ -7,7 +7,7 @@ async function createProduct(data: ProductCreateInput): Promise<Product> {
     data,
   });
 }
- 
+
 async function getProduct() {
   return prisma.product.findMany({
     select: {

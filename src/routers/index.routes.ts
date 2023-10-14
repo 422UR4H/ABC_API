@@ -10,6 +10,8 @@ import { commentRouter } from './comment.routes';
 import { newsRouter } from './news.routes';
 import { savedItensRouter } from './savedItens.routes';
 import { profileRouter } from './profile.routes';
+import { validatedPracticeRouter } from './validationPractices.routes';
+
 
 const router = Router();
 
@@ -24,6 +26,7 @@ router
   .use('/comments', commentRouter)
   .use('/user-products', userProductsRouter)
   .use('/news', newsRouter)
-  .use('/save', savedItensRouter);
+  .use('/save', savedItensRouter)
+  .use('/validate', validatedPracticeRouter);
 
 export default router;

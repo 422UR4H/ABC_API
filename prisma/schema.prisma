@@ -9,22 +9,25 @@ datasource db {
 }
 
 model User {
-    id          Int           @id @default(autoincrement())
-    name        String        @db.VarChar()
-    nickName    String        @db.VarChar()
-    email       String        @unique @db.VarChar(32)
-    password    String        @db.VarChar(255)
-    role        UserCategory  @default(GUEST)
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
-    userProduct UserProduct[]
-    session     Session[]
-    post        Post[]
-    comment     Comment[]
-    news        News[]
-    profile     Profile?
-    savedPost   SavedPost[]
-    savedNews   SavedNews[]
+    id                      Int                      @id @default(autoincrement())
+    name                    String                   @db.VarChar()
+    nickName                String                   @db.VarChar()
+    email                   String                   @unique @db.VarChar(32)
+    password                String                   @db.VarChar(255)
+    status                  UserValidationStatus     @default(NIVEL1)
+    role                    UserCategory             @default(GUEST)
+    createdAt               DateTime                 @default(now())
+    updatedAt               DateTime                 @updatedAt
+    userProduct             UserProduct[]
+    session                 Session[]
+    post                    Post[]
+    comment                 Comment[]
+    news                    News[]
+    profile                 Profile?
+    savedPost               SavedPost[]
+    savedNews               SavedNews[]
+    userToValidatePractices UserToValidatePractice[]
+    userValidatedPractices  UserValidatedPractice[]
 
     @@map("users")
 }
@@ -106,8 +109,10 @@ model Practice {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    practiceAdvantage PracticeAdvantage[]
-    practiceProduct   PracticeProduct[]
+    practiceAdvantage       PracticeAdvantage[]
+    practiceProduct         PracticeProduct[]
+    userToValidatePractices UserToValidatePractice[]
+    userValidatedPractices  UserValidatedPractice[]
 
     @@map("practices")
 }
@@ -136,6 +141,42 @@ model PracticeProduct {
     practice Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
 
     @@map("practiceProducts")
+}
+
+model UserToValidatePractice {
+    id         Int      @id @default(autoincrement())
+    userId     Int
+    practiceId Int
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practice Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, practiceId], name: "toValidate_userId_practiceId")
+    @@map("userToValidatePractices")
+}
+
+model UserValidatedPractice {
+    id         Int      @id @default(autoincrement())
+    userId     Int
+    practiceId Int
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practice Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, practiceId], name: "validated_userId_practiceId")
+    @@map("userValidatedPractices")
+}
+
+enum UserValidationStatus {
+    NIVEL1
+    NIVEL2
+    NIVEL3
+    NIVEL4
+    NIVEL5
 }
 
 enum ForumCategory {

@@ -1,6 +1,7 @@
+import bcrypt from 'bcrypt';
 import { ForumCategory } from '@prisma/client';
 import prisma from '../src/database/db.connection';
-import { products, practicesData } from '../src/utils/constants.utils';
+import { products, practicesData, newsData } from '../src/utils/constants.utils';
 
 async function seedProduct() {
   const { _count } = await prisma.product.aggregate({ _count: { _all: true } });
@@ -87,12 +88,46 @@ async function seedForum() {
   return prisma.forum.createMany({ data });
 }
 
+async function seedNews() {
+  const { _count } = await prisma.news.aggregate({
+    _count: { _all: true },
+  });
+  const count = _count._all;
+
+  const hashedPassword = await bcrypt.hash('newsPassword', 12);
+
+  const user = await prisma.user.findUnique({ where: { email: 'news@news.com' } });
+
+  if (!user) {
+    const newUser = await prisma.user.create({
+      data: { name: 'News Author', nickName: 'News', email: 'news@news.com', password: hashedPassword },
+    });
+    const data = Array.from({ length: newsData.length - count }).map((_p, i) => ({
+      title: newsData[i].title,
+      text: newsData[i].text,
+      source: newsData[i].source,
+      author: newUser.id,
+    }));
+    return prisma.news.createMany({ data });
+  }
+
+  const data = Array.from({ length: newsData.length - count }).map((_p, i) => ({
+    title: newsData[i].title,
+    text: newsData[i].text,
+    source: newsData[i].source,
+    author: user.id,
+  }));
+
+  return prisma.news.createMany({ data });
+}
+
 async function main() {
   await seedProduct();
   await seedPractice();
   await seedPracticeAdvantage();
   await seedPracticeProduct();
   await seedForum();
+  await seedNews();
 }
 
 main()
