@@ -2,7 +2,7 @@
 
 Este é um Web-Service construído utilizando as seguintes tecnologias TypeScript, NodeJS, Express, Postgres para o Hackathon DESAFIO SERPRO.
 
-Tem toda a estrutura das rotas prontas em uma colletion do thunderClient para testes.
+Tem toda a estrutura das principais rotas prontas em uma colletion do thunderClient para testes.
 
 Pode ser utilizado um Banco local para testes configurado um arquivo .env seguindo o padrão:
 
