@@ -22,10 +22,39 @@ model User {
     post        Post[]
     comment     Comment[]
     news        News[]
+    profile     Profile?
     savedPost   SavedPost[]
     savedNews   SavedNews[]
 
     @@map("users")
+}
+
+model Profile {
+    id        Int    @id @default(autoincrement())
+    cpfOrCpnj String @unique @db.VarChar(18)
+    userId    Int    @unique
+
+    user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    address Address?
+
+    @@map("profiles")
+}
+
+model Address {
+    id        Int @id @default(autoincrement())
+    profileId Int @unique
+
+    cep         String @db.VarChar(9)
+    logradouro  String @db.VarChar(64)
+    complemento String @db.VarChar(64)
+    bairro      String @db.VarChar(64)
+    localidade  String @db.VarChar(64)
+    uf          String @db.VarChar(4)
+    ibge        String @db.VarChar(7)
+
+    profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+    @@map("addresses")
 }
 
 enum UserCategory {
@@ -36,7 +65,7 @@ enum UserCategory {
 model Session {
     id        Int      @id @default(autoincrement())
     userId    Int
-    user      User     @relation(fields: [userId], references: [id])
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     token     String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -64,7 +93,7 @@ model UserProduct {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user    User    @relation(fields: [userId], references: [id])
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     @@unique([userId, productId], name: "userId_productId")
@@ -91,7 +120,7 @@ model PracticeAdvantage {
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
-    practice Practice @relation(fields: [practiceId], references: [id])
+    practice Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
 
     @@map("practiceAdvantages")
 }
@@ -103,8 +132,8 @@ model PracticeProduct {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    product  Product  @relation(fields: [productId], references: [id])
-    practice Practice @relation(fields: [practiceId], references: [id])
+    product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    practice Practice @relation(fields: [practiceId], references: [id], onDelete: Cascade)
 
     @@map("practiceProducts")
 }
@@ -134,8 +163,8 @@ model Post {
     createdAt     DateTime      @default(now())
     updatedAt     DateTime      @updatedAt
 
-    user      User        @relation(fields: [author], references: [id])
-    forum     Forum       @relation(fields: [forumCategory], references: [category])
+    user      User        @relation(fields: [author], references: [id], onDelete: Cascade)
+    forum     Forum       @relation(fields: [forumCategory], references: [category], onDelete: Cascade)
     comment   Comment[]
     tags      Tags[]
     savedPost SavedPost[]
@@ -151,8 +180,8 @@ model Comment {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user User @relation(fields: [userId], references: [id])
-    post Post @relation(fields: [postId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
     @@map("comments")
 }
@@ -162,8 +191,8 @@ model Tags {
     postId    Int
     productId Int
 
-    post    Post    @relation(fields: [postId], references: [id])
-    product Product @relation(fields: [productId], references: [id])
+    post    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
     @@map("tags")
 }
@@ -177,7 +206,7 @@ model News {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    user      User        @relation(fields: [author], references: [id])
+    user      User        @relation(fields: [author], references: [id], onDelete: Cascade)
     savedNews SavedNews[]
 
     @@map("news")
@@ -188,8 +217,8 @@ model SavedPost {
     userId Int
     postId Int
 
-    user User @relation(fields: [userId], references: [id])
-    post Post @relation(fields: [postId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
     @@unique([userId, postId], name: "saved_post_user_id_post_id")
     @@map("savedPosts")
@@ -200,8 +229,8 @@ model SavedNews {
     userId Int
     newsId Int
 
-    user User @relation(fields: [userId], references: [id])
-    news News @relation(fields: [newsId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
 
     @@unique([userId, newsId], name: "saved_news_user_id_newsId")
     @@map("savedNews")

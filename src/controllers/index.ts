@@ -7,3 +7,4 @@ export * from './forum.controller';
 export * from './post.controller';
 export * from './comment.controller';
 export * from './news.controller';
+export * from './savedItens.controller';

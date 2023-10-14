@@ -35,8 +35,34 @@ async function getSavedItems(userId: number) {
   const data = await prisma.$transaction(async () => {
     const savedPosts = await prisma.savedPost.findMany({
       where: { userId },
+      select: {
+        post: {
+          select: {
+            id: true,
+            title: true,
+            text: true,
+            author: true,
+            user: { select: { id: true, name: true } },
+            comment: { select: { id: true, text: true, user: { select: { id: true, name: true } } } },
+          },
+        },
+      },
     });
-    const savedNews = await prisma.savedNews.findMany({ where: { userId } });
+    const savedNews = await prisma.savedNews.findMany({
+      where: { userId },
+      select: {
+        news: {
+          select: {
+            id: true,
+            title: true,
+            text: true,
+            author: true,
+            source: true,
+            user: { select: { id: true, name: true } },
+          },
+        },
+      },
+    });
     return { posts: savedPosts, news: savedNews };
   });
   return data;

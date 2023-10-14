@@ -7,3 +7,4 @@ export * from './post.service';
 export * from './comment.service';
 export * from './userProducts.service';
 export * from './news.service';
+export * from './savedItens.service';

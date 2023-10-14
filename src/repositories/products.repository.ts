@@ -8,8 +8,26 @@ async function createProduct(data: ProductCreateInput): Promise<Product> {
   });
 }
 
-async function getProduct(): Promise<Product[]> {
-  return prisma.product.findMany();
+async function getProduct() {
+  return prisma.product.findMany({
+    select: {
+      id: true,
+      name: true,
+      practiceProduct: {
+        select: {
+          practice: {
+            select: {
+              id: true,
+              name: true,
+              practiceAdvantage: {
+                select: { id: true, advantage: true, description: true },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
 }
 
 async function getProductByIdAndPractice(productId: number) {
